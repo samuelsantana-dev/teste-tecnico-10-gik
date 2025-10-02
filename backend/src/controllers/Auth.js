@@ -1,9 +1,8 @@
 import User from "../models/Auth.js";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "sua_chave_secreta"; // ideal pegar de variável de ambiente
+const JWT_SECRET = "sua_chave_secreta"; 
 
-// Registrar usuário
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -20,7 +19,6 @@ export const register = async (req, res) => {
   }
 };
 
-// Login
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;

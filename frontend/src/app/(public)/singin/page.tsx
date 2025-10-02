@@ -4,20 +4,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import InputText from "@/components/forms/InputText";
-import {  registerSchema } from "@/utils/validations";
+import {  loginSchema } from "@/utils/validations";
 import {  registerUser } from "@/services/api-login";
 import { userStore } from "@/store/authStore";
 export default function RegisterPage() {
   const router = useRouter();
   const setUser = userStore((state) => state.setUser);
-   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [verifyPassword, setVerifyPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setError] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
@@ -25,12 +19,9 @@ export default function RegisterPage() {
     e.preventDefault();
     setError({});
 
-    const parsed = registerSchema.safeParse({
-      name,
+    const parsed = loginSchema.safeParse({
       email,
-      // password,
-      // verifyPassword,
-      phone,
+      password,
     });
     if (!parsed.success) {
       const fieldErrors: Record<string, string> = {};
@@ -74,13 +65,6 @@ export default function RegisterPage() {
           <p className="mb-3 text-sm text-red-500 text-center">{errors.form}</p>
         )}
 
-        <InputText
-        label="Nome"
-        placeholder="Digite seu nome"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
       <InputText
         label="Email"
@@ -91,16 +75,8 @@ export default function RegisterPage() {
       />
       {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
      
-      <InputText
-        label="Email"
-        type="message"
-        placeholder="Digite seu message"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
-      {/* <InputText
+      <InputText
         label="Senha"
         type="password"
         placeholder="Digite sua senha"
@@ -108,47 +84,6 @@ export default function RegisterPage() {
         onChange={(e) => setPassword(e.target.value)}
       />
       {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-
-      <InputText
-        label="Confirmar Senha"
-        type="password"
-        placeholder="Digite sua senha novamente"
-        value={verifyPassword}
-        onChange={(e) => setVerifyPassword(e.target.value)}
-      />
-      {errors.verifyPassword && (
-        <p className="text-red-500 text-sm">{errors.verifyPassword}</p>
-      )} */}
-
-      <InputText
-        label="País"
-        placeholder="Ex: 55"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-      />
-      {errors["phone.phone"] && (
-        <p className="text-red-500 text-sm">{errors["phone.phone"]}</p>
-      )}
-
-      <InputText
-        label="jobTitle"
-        placeholder="jobTitle"
-        value={jobTitle}
-        onChange={(e) => setJobTitle(e.target.value)}
-      />
-      {errors["phone.jobTitle"] && (
-        <p className="text-red-500 text-sm">{errors["phone.jobTitle"]}</p>
-      )}
-
-      <InputText
-        label="birthDate"
-        placeholder="birthDate"
-        value={birthDate}
-        onChange={(e) => setBirthDate(e.target.value)}
-      />
-      {errors["phone.birthDate"] && (
-        <p className="text-red-500 text-sm">{errors["phone.birthDate"]}</p>
-      )}
 
         <button
           type="submit"

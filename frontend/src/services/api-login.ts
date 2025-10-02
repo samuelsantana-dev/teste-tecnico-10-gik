@@ -1,15 +1,8 @@
 import { url } from "@/utils/validations";
 
 export async function registerUser(user: {
-  name: string;
   email: string;
   password: string;
-  verifyPassword: string;
-  phone: {
-    country: string;
-    ddd: string;
-    number: string;
-  };
 }) {
   try {
     const response = await fetch(`${url}/users`, {
