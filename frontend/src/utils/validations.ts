@@ -6,10 +6,10 @@ export const loginSchema = z.object({
     .email("Digite um email válido"),
   password: z
     .string()
-    // .regex(
-    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/,
-    //   "Senha deve conter ao menos uma letra maiúscula, uma minúscula, um número e um caractere especial"
-    // ),
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/,
+      "Senha deve conter ao menos uma letra maiúscula, uma minúscula, um número e um caractere especial"
+    ),
 });
 
 
@@ -32,4 +32,4 @@ export const schemaLeadCreateUpdate = z.object({
 });
 
 
-export const url = "http://localhost:5000";
+export const url = "https://teste-tecnico-10-api.vercel.app/";
