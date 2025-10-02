@@ -1,17 +1,8 @@
+📦 Teste Técnico 10 Gik – CRUD de Leads com Next.js e MongoDB
 
-📦 Teste Técnico 10 Gik - CRUD de Leads com Next.js e MongoDb
+Objetivo: Desenvolver um sistema de cadastro e gestão de leads, incluindo formulário público, API REST e painel administrativo.
 
-Este projeto foi desenvolvido como parte de um teste técnico, utilizando Next.js com autenticação baseada em token e gerenciamento de estado com Zustand. Inclui um CRUD completo de produtos e um gráfico de métricas feito com Recharts.
-
-Validação de senha
-Ao criar um usuário, a senha deve atender aos seguintes critérios: conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial. Essa regra garante maior segurança à aplicação.
-⚠️ Por isso, é recomendável criar um novo usuário e realizar um login atualizado para acessar todas as funcionalidades corretamente.
-
-<!-- Caso queira pode user esse:
-samuelsantana@gmail.com
-saAS12$ -->
-
-<!-- A imagem não vem na rota de https://api-teste-front-production.up.railway.app /leads entao não foi possivel renderizar na tabela a imagem. -->
+Este projeto foi desenvolvido como parte de um teste técnico para Desenvolvedor Pleno Full Stack, utilizando Next.js, MongoDB, Zustand e Tailwind CSS. Inclui um CRUD completo de leads, autenticação via token e um gráfico de métricas com Recharts.
 
 🚀 Tecnologias Utilizadas
 
@@ -22,82 +13,100 @@ saAS12$ -->
 - Hero UI (componentes de interface – diferencial)
 - Zod (validação de formulários)
 - Recharts 📊 (gráfico de métricas mockadas)
+- Backend: Node.js (API Routes do Next.js)
+- Database: MongoDB
+- Frontend: Next.js e React.js
 
-🔐 Proteção de Rotas
-
-⚠️ Importante:
-A autenticação foi feita somente pelo front-end, utilizando localStorage para armazenar o token, a forma mais segura seria validar o token no servidor (via cookies e sessões), mas como não havia backend disponível, a solução foi feita inteiramente no front-end.
-
-Isso significa que:
-Para acessar as rotas autenticadas, o usuário precisa criar uma conta e pegar o token, o token é salvo no localStorage e validado em cada rota protegida.
+🔐 Autenticação e Proteção de Rotas
+O sistema utiliza autenticação baseada em token, armazenando o token no localStorage.
+Todas as rotas protegidas exigem que o usuário esteja logado.
+⚠️ Observação: Como o backend completo não foi implementado, a validação ocorre apenas no frontend.
 
 📌 Funcionalidades
+Formulário Público de Leads
 
-✅ CRUD de Leads
+Campos obrigatórios: nome, e-mail, telefone, cargo, data de nascimento, mensagem
 
-- Criar Lead
-- Editar Lead
-- Deletar Lead
-- Listar Lead
+Validações:
 
-✅ Validação de formulários com Zod (impede campos inválidos)
-✅ Gerenciamento de estado global com Zustand (armazenamento de token, lista de produtos, etc.)
-✅ Rotas autenticadas (necessário token para acessar)
-✅ Gráfico de métricas com Recharts (dados fictícios/mockados)
-✅ Responsividade e Dark Mode com Tailwind CSS
-✅ Desenvolvido com Next.js (com SSR e API Routes se necessário) e React.js para uma aplicação moderna e performática
-✅ Hero UI para componentes da interface
-✅ Deploy funcional (Vercel, Netlify, etc.)
-✅ Layout responsivo (funcionar bem em desktop e mobile)
+E-mail válido
+Telefone brasileiro
+Data válida
+Todos os campos obrigatórios
+Tracking automático: utm_source, utm_medium, utm_campaign, utm_term, utm_content, gclid, fbclid
+Painel Administrativo
+CRUD completo de Leads: criar, editar, deletar e listar
+Visualização de detalhes completos do lead (página individual)
+Busca por nome e e-mail
+Visualização dos dados de tracking (UTMs)
+Exportação de leads em CSV ou Excel
+Autenticação básica com validação de token
+Funcionalidades Extras
+Validação de formulários com Zod
+Gerenciamento de estado global com Zustand
+Gráfico de métricas com Recharts (dados mockados: produtos criados, deletados e outras estatísticas)
+Layout responsivo e suporte a Dark Mode
+Código organizado em componentes, stores, contextos e páginas
 
 📂 Estrutura do Projeto
 src/
- ├── app/              # Páginas do Next.js
- ├── components/       # Componentes reutilizáveis (UI, formulários, etc.)
- ├── services/         # Serviços (API calls)
- ├── stores/           # Stores do Zustand (estado global)
- ├── styles/           # Estilização do site
- ├── utils/            # Schemas, validações (Zod), helpers, types
+├── app/              # Páginas do Next.js
+├── components/       # Componentes reutilizáveis (UI, formulários, etc.)
+├── services/         # Serviços (API calls)
+├── stores/           # Stores do Zustand (estado global)
+├── styles/           # Estilização do site
+├── utils/            # Schemas, validações (Zod), helpers, types
 
 🛠️ Como Rodar o Projeto
-1. Clone o repositório
-git clone https://github.com/samuelsantana-dev/teste-tecnico.git
-cd teste-tecnico
 
-2. Instale as dependências
+Clone o repositório:
+
+git clone https://github.com/samuelsantana-dev/teste-tecnico-10-gik
+cd teste-tecnico-10-gik
+
+
+Instale as dependências:
+
 npm install
 # ou
 yarn install
 # ou
 pnpm install
-# ou
-bun install
 
-3. Rode o servidor de desenvolvimento
+
+Rode o servidor de desenvolvimento:
+
 npm run dev
+
 
 Abra http://localhost:3000
  no navegador.
 
 🌍 Deploy
-O projeto pode ser facilmente publicado na Vercel (plataforma oficial do Next.js).
-👉 Documentação de Deploy
 
-O projeto está publicado na Vercel e pode ser acessado pelo link abaixo:
-https://teste-tecnico-front-end-7flh.vercel.app/
+O projeto foi publicado na Vercel e pode ser acessado aqui:
+https://teste-tecnico-10-gik.vercel.app/
 
 📊 Demonstração de Métricas
 
-Um gráfico foi implementado utilizando Recharts com dados fictícios, representando métricas do sistema:
-- Total de produtos criados
-- Produtos deletados
-- Outras estatísticas mockadas
+Gráficos de métricas criados com Recharts (dados fictícios)
+
+Estatísticas: total de leads, leads deletados e outras métricas do sistema
 
 ✅ Diferenciais Implementados
 
-- Gerenciamento de estado global com Zustand
-- Hero UI para UI moderna
-- Código organizado em componentes, stores, contextos e páginas
-- Boas práticas de estruturação e validação de formulários
+Gerenciamento de estado global com Zustand
 
-✍️ Desenvolvido por Samuel Santana
+Hero UI para interface moderna
+
+Código organizado e escalável
+
+Boas práticas de validação de formulários e segurança de dados
+
+Responsividade completa para desktop e mobile
+
+✍️ Desenvolvido por
+
+Samuel Santana
+
+GitHub: https://github.com/samuelsantana-dev

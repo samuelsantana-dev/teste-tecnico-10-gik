@@ -34,8 +34,8 @@ MongoDB (Atlas ou local)
 
 Clone o repositório:
 
-git clone <URL_DO_REPOSITORIO>
-cd <NOME_DO_REPOSITORIO>
+git clone https://github.com/samuelsantana-dev/teste-tecnico-10-gik
+cd https://github.com/samuelsantana-dev/teste-tecnico-10-gik
 
 
 Instale as dependências:
@@ -47,8 +47,11 @@ yarn install
 
 Configure as variáveis de ambiente criando um arquivo .env na raiz do projeto:
 
-MONGO_URI=mongodb+srv://<usuario>:<senha>@cluster.mongodb.net/<nome_db>?retryWrites=true&w=majority
+MONGO_URI=mongodb+srv://10-gik-name:db-Pass-gik-word@cluster-10-gik.rl4hcan.mongodb.net/leads_db?retryWrites=true&w=majority&appName=cluster-10-gik
 PORT=5000
+ADMIN_USER=10-gik-name
+ADMIN_PASS=db-Pass-gik-word
+
 
 
 Inicie a API:
