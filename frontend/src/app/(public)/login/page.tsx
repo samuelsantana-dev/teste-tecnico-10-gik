@@ -43,7 +43,7 @@ export default function LoginPage() {
         phone: response.user.phone
       })
 
-      router.push("/products");
+      router.push("/leads");
     } catch (err: any) {
       setError(err.message || "Erro ao fazer login");
     } finally {

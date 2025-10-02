@@ -4,11 +4,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import InputText from "@/components/forms/InputText";
-import { editProductApi, getUnicProductsApi, updateProductThumbnailApi } from "@/services/api-products";
+import { editLeadApi, getUnicLeadApi } from "@/services/api-leads";
 import { Loading } from "@/components/ui/Loading";
-import { productEditSchema } from "@/utils/validations";
+import { leadEditSchema } from "@/utils/validations";
 import ProtectedRoute from "@/components/ProtectedRoute";
-export default function EditProduct() {
+export default function EditLead() {
   const router = useRouter();
   const {id}= useParams<{id: string}>()
   const [title, setTitle] = useState("");
@@ -23,7 +23,7 @@ export default function EditProduct() {
   e.preventDefault();
   setError(null);
 
-  const parsed = productEditSchema.safeParse({ title, description });
+  const parsed = leadEditSchema.safeParse({ title, description });
   if (!parsed.success) {
     setError(parsed.error.issues[0].message);
     return;
@@ -32,13 +32,9 @@ export default function EditProduct() {
   try {
     setLoading(true);
 
-    await editProductApi(id, title, description);
+    await editLeadApi(id, title, description);
 
-    if (thumbnail) {
-      await updateProductThumbnailApi(id, thumbnail);
-    }
-
-    router.push("/products");
+    router.push("/leads");
   } catch (err: any) {
     setError(err.message || "Erro ao editar produto");
   } finally {
@@ -49,18 +45,18 @@ export default function EditProduct() {
 
 
   useEffect(() => {
-    async function fetchProduct(){
+    async function fetchLead(){
         try {
-            const responseProduct = await getUnicProductsApi(id);
-            setTitle(responseProduct.data.title);
-            setDescription(responseProduct.data.description);
-            setPreview(responseProduct.data.thumbnail.url);
+            const responseLead = await getUnicLeadApi(id);
+            setTitle(responseLead.data.title);
+            setDescription(responseLead.data.description);
+            setPreview(responseLead.data.thumbnail.url);
         } catch (error) {
             console.error("Error fetching product:", error);
         }
     }
 
-    fetchProduct();
+    fetchLead();
   }, []);
 
    if (loading) {
@@ -84,7 +80,7 @@ export default function EditProduct() {
         )}
 
         <InputText 
-        label="Titulo do produto"
+        label="teste"
         placeholder="Digite o titulo"
         type="title"
         size="md"

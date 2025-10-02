@@ -12,7 +12,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const user = userStore((state) => state.user);
   const navigation = [
-    { name: 'Dashboard', href: '/products' },
+    { name: 'Dashboard', href: '/leads' },
     { name: 'Relatórios', href: '/metrics' },
   ];
   const authNavigation = [

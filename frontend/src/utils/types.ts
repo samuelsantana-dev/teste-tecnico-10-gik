@@ -1,11 +1,11 @@
-export interface ItemList {
-  id: string;
-  title: string;
-  description: string;
-  status: boolean;
-  updatedAt: string;
-  createdAt: string;
-};
+export interface LeadData {
+  name: string;
+  email: string;
+  phone: string;
+  job_title: string;
+  birth_date: string; // formato YYYY-MM-DD
+  message: string;
+}
 
 export interface AuthResponse {
   token: string;

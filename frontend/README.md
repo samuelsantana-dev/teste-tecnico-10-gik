@@ -11,7 +11,7 @@ Ao criar um usuário, a senha deve atender aos seguintes critérios: conter pelo
 samuelsantana@gmail.com
 saAS12$ -->
 
-<!-- A imagem não vem na rota de https://api-teste-front-production.up.railway.app /products entao não foi possivel renderizar na tabela a imagem. -->
+<!-- A imagem não vem na rota de https://api-teste-front-production.up.railway.app /leads entao não foi possivel renderizar na tabela a imagem. -->
 
 🚀 Tecnologias Utilizadas
 

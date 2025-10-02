@@ -13,55 +13,23 @@ export const loginSchema = z.object({
 });
 
 
-export const registerSchema = z
-  .object({
-    name: z
-      .string()
-      .min(3, "Nome deve ter no mínimo 3 caracteres")
-      .regex(/^[A-Za-zÀ-ÿ\s]+$/, "Nome deve conter apenas letras e espaços"),
-    email: z.string().email("Email inválido"),
-    password: z
-      .string()
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/,
-        "Senha deve conter ao menos uma letra maiúscula, uma minúscula, um número e um caractere especial"
-      ),
-    verifyPassword: z.string().regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/,
-        "Senha deve conter ao menos uma letra maiúscula, uma minúscula, um número e um caractere especial"
-      ),
-    phone: z.object({
-      country: z
-        .string()
-        .min(1, "Código do país é obrigatório")
-        .regex(/^\d+$/, "Código do país inválido"),
-      ddd: z
-        .string()
-        .min(2, "DDD inválido")
-        .max(3, "DDD inválido")
-        .regex(/^\d+$/, "DDD deve conter apenas números"),
-      number: z
-        .string()
-        .min(8, "Número inválido")
-        .max(10, "Número inválido")
-        .regex(/^\d+$/, "Número deve conter apenas números"),
-    }),
-  })
-  .refine((data) => data.password === data.verifyPassword, {
-    message: "As senhas não conferem",
-    path: ["verifyPassword"],
-  });
+export const schemaLeadCreateUpdate = z.object({
+  name: z
+    .string()
+    .min(3, "Nome deve ter no mínimo 3 caracteres")
+    .regex(/^[A-Za-zÀ-ÿ\s]+$/, "Nome deve conter apenas letras e espaços"),
+  email: z.string().email("Email inválido"),
+  phone: z.string().min(8, "Telefone inválido").max(15, "Telefone inválido").regex(/^\+?[\d\s()-]+$/, "Telefone deve conter apenas números e caracteres válidos"),
+  birth_date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Data de nascimento deve estar no formato YYYY-MM-DD")
+    .refine(
+      (val) => !isNaN(Date.parse(val)),
+      "Data de nascimento inválida"
+    ),
+  job_title: z.string().min(3, "Cargo deve ter no mínimo 3 caracteres"),
+  message: z.string().min(5, "Mensagem deve ter no mínimo 5 caracteres"),
+});
 
 
-export const productEditSchema = z.object({
-  title: z.string().min(3, "Título deve ter no mínimo 3 caracteres"),
-  description: z.string().min(5, "Descrição deve ter no mínimo 10 caracteres"),
-})
-
-export const productCreateSchema = z.object({
-  title: z.string().min(3, "Título deve ter no mínimo 3 caracteres"),
-  description: z.string().min(5, "Descrição deve ter no mínimo 10 caracteres"),
-  // thumbnail: z.instanceof(File, "Arquivo inválido").refine((file) => file.size <= 5 * 1024 * 1024, "O arquivo deve ser menor que 5MB"),
-})
-
-export const url = "https://api-teste-front-production.up.railway.app";
+export const url = "http://localhost:5000/leads";

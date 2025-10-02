@@ -1,22 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/Button";
-import { deleteProductApi, getProductsApi } from "@/services/api-products";
+import { deleteLeadApi, getLeadApi } from "@/services/api-leads";
 import { useRouter } from "next/navigation";
 import { ItemList } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { Loading } from "@/components/ui/Loading";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-export default function ProductsPage() {
+export default function LeadPage() {
   const router = useRouter();
-  const [products, setProducts] = useState<ItemList[]>([]);
+  const [products, setLead] = useState<any>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function getProducts() {
+    async function getLead() {
       try {
-        const responseApi = await getProductsApi();
-        setProducts(responseApi.data);
+        const responseApi = await getLeadApi();
+        setLead(responseApi.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -24,13 +25,13 @@ export default function ProductsPage() {
       }
     }
 
-    getProducts();
+    getLead();
   }, []);
 
   const handleDelete = async (id: string) => {
     try {
-      await deleteProductApi(id);
-      setProducts(products.filter(product => product.id !== id));
+      await deleteLeadApi(id);
+      setLead(products.filter(product => product.id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
       alert("Erro ao excluir produto");
@@ -38,11 +39,11 @@ export default function ProductsPage() {
   };
 
   const handleEdit = (id: string) => {
-    router.push(`/products/edit/${id}`);
+    router.push(`/leads/edit/${id}`);
   };
 
   const handleCreate = () => {
-    router.push("/products/create");
+    router.push("/leads/create");
   };
 
   if (loading) {
@@ -104,7 +105,7 @@ export default function ProductsPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {products?.map((product) => (
+                  {products?.map((product: any) => (
                     <tr key={product.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">

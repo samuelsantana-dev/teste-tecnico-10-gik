@@ -12,11 +12,12 @@ export default function RegisterPage() {
   const setUser = userStore((state) => state.setUser);
    const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [verifyPassword, setVerifyPassword] = useState("");
-  const [country, setCountry] = useState("");
-  const [ddd, setDdd] = useState("");
-  const [number, setNumber] = useState("");
+  const [message, setMessage] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [verifyPassword, setVerifyPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [errors, setError] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
@@ -27,13 +28,9 @@ export default function RegisterPage() {
     const parsed = registerSchema.safeParse({
       name,
       email,
-      password,
-      verifyPassword,
-      phone: {
-        country,
-        ddd,
-        number,
-      },
+      // password,
+      // verifyPassword,
+      phone,
     });
     if (!parsed.success) {
       const fieldErrors: Record<string, string> = {};
@@ -56,7 +53,7 @@ export default function RegisterPage() {
         token: response.token,
       })
       
-      router.push("/products");
+      router.push("/leads");
     } catch (err: any) {
       setError(err.message || "Erro ao fazer cadastro");
     } finally {
@@ -94,8 +91,17 @@ export default function RegisterPage() {
         onChange={(e) => setEmail(e.target.value)}
       />
       {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-
+     
       <InputText
+        label="Email"
+        type="message"
+        placeholder="Digite seu message"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+
+      {/* <InputText
         label="Senha"
         type="password"
         placeholder="Digite sua senha"
@@ -113,36 +119,36 @@ export default function RegisterPage() {
       />
       {errors.verifyPassword && (
         <p className="text-red-500 text-sm">{errors.verifyPassword}</p>
-      )}
+      )} */}
 
       <InputText
         label="País"
         placeholder="Ex: 55"
-        value={country}
-        onChange={(e) => setCountry(e.target.value)}
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
       />
-      {errors["phone.country"] && (
-        <p className="text-red-500 text-sm">{errors["phone.country"]}</p>
+      {errors["phone.phone"] && (
+        <p className="text-red-500 text-sm">{errors["phone.phone"]}</p>
       )}
 
       <InputText
-        label="DDD"
-        placeholder="Ex: 11"
-        value={ddd}
-        onChange={(e) => setDdd(e.target.value)}
+        label="jobTitle"
+        placeholder="jobTitle"
+        value={jobTitle}
+        onChange={(e) => setJobTitle(e.target.value)}
       />
-      {errors["phone.ddd"] && (
-        <p className="text-red-500 text-sm">{errors["phone.ddd"]}</p>
+      {errors["phone.jobTitle"] && (
+        <p className="text-red-500 text-sm">{errors["phone.jobTitle"]}</p>
       )}
 
       <InputText
-        label="Número"
-        placeholder="Ex: 987654321"
-        value={number}
-        onChange={(e) => setNumber(e.target.value)}
+        label="birthDate"
+        placeholder="birthDate"
+        value={birthDate}
+        onChange={(e) => setBirthDate(e.target.value)}
       />
-      {errors["phone.number"] && (
-        <p className="text-red-500 text-sm">{errors["phone.number"]}</p>
+      {errors["phone.birthDate"] && (
+        <p className="text-red-500 text-sm">{errors["phone.birthDate"]}</p>
       )}
 
         <button
