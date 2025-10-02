@@ -32,4 +32,4 @@ export const schemaLeadCreateUpdate = z.object({
 });
 
 
-export const url = "https://teste-tecnico-10-api.vercel.app/";
+export const url = "https://teste-tecnico-10-api.vercel.app";
