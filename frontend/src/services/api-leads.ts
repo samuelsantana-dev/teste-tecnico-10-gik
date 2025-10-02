@@ -25,7 +25,7 @@ export async function getLeadApi() {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${url}/list`, {
+    const response = await fetch(`${url}/list/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

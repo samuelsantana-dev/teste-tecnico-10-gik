@@ -3,23 +3,24 @@
 import { Button } from "@/components/ui/Button";
 import { deleteLeadApi, getLeadApi } from "@/services/api-leads";
 import { useRouter } from "next/navigation";
-import { ItemList } from "@/utils/types";
+import { LeadData } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { Loading } from "@/components/ui/Loading";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function LeadPage() {
   const router = useRouter();
-  const [products, setLead] = useState<any>([]);
+  const [leads, setLead] = useState<LeadData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getLead() {
       try {
         const responseApi = await getLeadApi();
-        setLead(responseApi.data);
+        console.log("🚀 ~ getLead ~ responseApi:", responseApi)
+        setLead(responseApi);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching leads:", error);
       } finally {
         setLoading(false);
       }
@@ -31,9 +32,9 @@ export default function LeadPage() {
   const handleDelete = async (id: string) => {
     try {
       await deleteLeadApi(id);
-      setLead(products.filter(product => product.id !== id));
+      setLead(leads.filter(lead => lead.id !== id));
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error("Error deleting lead:", error);
       alert("Erro ao excluir produto");
     } 
   };
@@ -58,7 +59,7 @@ export default function LeadPage() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4 sm:mb-0">
-            Gerenciamento de Produtos
+            Gerenciamento de Leads
           </h1>
           <Button
             onClick={handleCreate}
@@ -69,11 +70,11 @@ export default function LeadPage() {
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            Novo Produto
+            Novo Lead
           </Button>
         </div>
 
-        {products?.length === 0 ? (
+        {leads?.length === 0 ? (
           <div className="bg-white rounded-lg shadow p-8 text-center">
             <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-16" />
@@ -88,56 +89,41 @@ export default function LeadPage() {
                 <thead className="bg-gray-50">
                   <tr>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Produto
+                      Nome
                     </th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Descrição
+                      Email
                     </th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
+                      Mensagem
                     </th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Data de Criação
                     </th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Ações
+                      Data de Nascimento
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {products?.map((product: any) => (
-                    <tr key={product.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <svg className="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                            </svg>
-                          </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{product.title}</div>
-                          </div>
-                        </div>
+                  {leads?.map((lead: any) => (
+                    <tr key={lead.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900 max-w-xs truncate">{lead.email || "Sem descrição"}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900 max-w-xs truncate">{product.description || "Sem descrição"}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          product.status 
-                            ? "bg-green-100 text-green-800" 
-                            : "bg-red-100 text-red-800"
-                        }`}>
-                          {product.status ? "Ativo" : "Inativo"}
-                        </span>
+                        <div className="text-sm text-gray-900 max-w-xs truncate">{lead.message || "Sem message"}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(product.createdAt).toLocaleDateString('pt-BR')}
+                          {lead.createdAt.slice(0, 10)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(lead.birth_date).toLocaleDateString('pt-BR')}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2">
                           <Button
-                            onClick={() => handleEdit(product.id)}
+                            onClick={() => handleEdit(lead.id)}
                             color="secondary"
                             size="sm"
                             className="flex items-center bg-yellow-500 hover:bg-yellow-600"
@@ -148,7 +134,7 @@ export default function LeadPage() {
                             Editar
                           </Button>
                           <Button
-                            onClick={() => handleDelete(product.id)}
+                            onClick={() => handleDelete(lead.id)}
                             color="danger"
                             size="sm"
                             className="flex items-center bg-red-600 hover:bg-red-700 text-white"

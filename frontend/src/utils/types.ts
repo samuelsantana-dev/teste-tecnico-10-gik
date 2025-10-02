@@ -1,10 +1,13 @@
 export interface LeadData {
-  name: string;
-  email: string;
-  phone: string;
-  job_title: string;
-  birth_date: string; // formato YYYY-MM-DD
-  message: string;
+  id?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  job_title?: string;
+  birth_date?: string; // formato YYYY-MM-DD
+  message?: string;
 }
 
 export interface AuthResponse {
