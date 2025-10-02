@@ -35,14 +35,12 @@ export default function LoginPage() {
       setLoading(true);
 
       const response = await login(email, password);
+      console.log("🚀 ~ handleSubmit ~ response:", response)
       
       setUser({
         token: response.token,
-        name: response.user.name,
-        email: response.user.email,
-        phone: response.user.phone
       })
-
+      console.log("🚀 token", localStorage.getItem("token"))
       router.push("/leads");
     } catch (err: any) {
       setError(err.message || "Erro ao fazer login");

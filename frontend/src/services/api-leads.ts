@@ -6,7 +6,7 @@ export async function getUnicLeadApi(id: string) {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${url}/listUnic/${id}`, {
+    const response = await fetch(`${url}/leads/listUnic/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export async function getLeadApi() {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${url}/list/`, {
+    const response = await fetch(`${url}/leads/list/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export async function deleteLeadApi(id: string) {
   try {
     const token = localStorage.getItem("token");
 
-    await fetch(`${url}/delete/${id}`, {
+    await fetch(`${url}/leads/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export async function createLeadApi(data: LeadData) {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${url}/create`, {
+    const response = await fetch(`${url}/leads/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export async function editLeadApi(
   try {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${url}/update/${id}`, {
+    const response = await fetch(`${url}/leads/update/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
