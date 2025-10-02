@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import leadsRouter from "./routes/LeadRoutes.js";
+import authRouter from "./routes/Auth.js";
 
 dotenv.config();
 const app = express();
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/leads", leadsRouter);
+app.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 3000;
 connectDB().then(() => {

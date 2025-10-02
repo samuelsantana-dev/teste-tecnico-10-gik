@@ -6,33 +6,49 @@ import { useParams, useRouter } from "next/navigation";
 import InputText from "@/components/forms/InputText";
 import { editLeadApi, getUnicLeadApi } from "@/services/api-leads";
 import { Loading } from "@/components/ui/Loading";
-import { leadEditSchema } from "@/utils/validations";
+import { schemaLeadCreateUpdate } from "@/utils/validations";
 import ProtectedRoute from "@/components/ProtectedRoute";
 export default function EditLead() {
   const router = useRouter();
   const {id}= useParams<{id: string}>()
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
- const [thumbnail, setThumbnail] = useState<File | null | any>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-
-  const [error, setError] = useState<string | null>(null);
+ const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
   e.preventDefault();
-  setError(null);
+  // setError(null);
 
-  const parsed = leadEditSchema.safeParse({ title, description });
+  const formData = {
+    name: name,
+    email: email,
+    phone: phone,        
+    job_title: jobTitle,
+    birth_date: birthDate,
+    message: message,
+  };
+
+  const parsed = schemaLeadCreateUpdate.safeParse(formData);
   if (!parsed.success) {
-    setError(parsed.error.issues[0].message);
+    const fieldErrors: Record<string, string> = {};
+    parsed.error.issues.forEach((issue) => {
+      const path = issue.path.join("."); 
+      fieldErrors[path] = issue.message;
+    });
+    setError(fieldErrors);
+    setLoading(false);
     return;
   }
 
   try {
     setLoading(true);
 
-    await editLeadApi(id, title, description);
+    await editLeadApi(id, formData);
 
     router.push("/leads");
   } catch (err: any) {
@@ -48,9 +64,19 @@ export default function EditLead() {
     async function fetchLead(){
         try {
             const responseLead = await getUnicLeadApi(id);
-            setTitle(responseLead.data.title);
-            setDescription(responseLead.data.description);
-            setPreview(responseLead.data.thumbnail.url);
+            setName(responseLead.name || "");
+            setEmail(responseLead.email || "");
+            setPhone(responseLead.phone || "");
+            setJobTitle(responseLead.job_title || "");
+            setMessage(responseLead.message || "");
+
+             if (responseLead.birth_date) {
+              const dateOnly = responseLead.birth_date.split('T')[0];
+              setBirthDate(dateOnly);
+            } else {
+              setBirthDate("");
+            }
+            // setBirthDate(responseLead.birth_date || "");
         } catch (error) {
             console.error("Error fetching product:", error);
         }
@@ -75,44 +101,64 @@ export default function EditLead() {
           Editar um produto
         </h1>
 
-        {error && (
-          <p className="mb-3 text-sm text-red-500 text-center">{error}</p>
-        )}
-
-        <InputText 
-        label="teste"
-        placeholder="Digite o titulo"
-        type="title"
-        size="md"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <InputText 
-        label="Descrição do produto"
-        placeholder="Digite a descrição"
-        type="description"
-        size="md"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <label htmlFor="thumbnail">Clique aqui para enviar o arquivo</label>
-        <input
-        className="mb-4 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-        type="file"
-        id="thumbnail"
-        accept="image/*"
-        onChange={(e) => setThumbnail(e.target.files ? e.target.files[0] : null)}
-      />
-
-     {preview && (
-      <img
-        src={thumbnail ? URL.createObjectURL(thumbnail) : preview}
-        alt="Preview"
-        className="mb-4 rounded-lg"
-      />
-    )}
+              <InputText 
+                  label="Nome"
+                  placeholder="Digite seu nome"
+                  type="text"
+                  size="md"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  error={error.name}
+                />
+       
+               <InputText 
+                 label="Email"
+                 placeholder="Digite seu email"
+                 type="email"
+                 size="md"
+                 value={email}
+                 onChange={(e) => setEmail(e.target.value)}
+                 error={error.email}
+               />
+       
+               <InputText 
+                 label="Telefone"
+                 placeholder="Digite seu telefone"
+                 type="text"
+                 size="md"
+                 value={phone}
+                 onChange={(e) => setPhone(e.target.value)}
+                 error={error.phone}
+               />
+       
+               <InputText 
+                 label="Cargo"
+                 placeholder="Digite seu cargo"
+                 type="text"
+                 size="md"
+                 value={jobTitle}
+                 onChange={(e) => setJobTitle(e.target.value)}
+                 error={error.job_title}
+               />
+       
+               <InputText 
+                label="Data de nascimento"
+                type="date"
+                size="md"
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
+                error={error.birth_date}
+              />
+       
+               <InputText 
+                 label="Mensagem"
+                 placeholder="Digite sua mensagem"
+                 type="text"
+                 size="md"
+                 value={message}
+                 onChange={(e) => setMessage(e.target.value)}
+                 error={error.message}
+               />
 
         <button
           type="submit"

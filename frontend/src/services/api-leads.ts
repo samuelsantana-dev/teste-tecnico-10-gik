@@ -74,7 +74,6 @@ export async function createLeadApi(data: LeadData) {
     if (!response.ok) {
       throw new Error("Erro ao criar lead");
     }
-    console.log("Lead created successfully");
     return await response.json();
   } catch (error) {
     console.error("Error creating lead:", error);
@@ -84,8 +83,7 @@ export async function createLeadApi(data: LeadData) {
 
 export async function editLeadApi(
   id: string,
-  title: string,
-  description: string
+  { name, email, phone, job_title, birth_date, message }: LeadData
 ) {
   try {
     const token = localStorage.getItem("token");
@@ -96,16 +94,23 @@ export async function editLeadApi(
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ title, description }),
+      body: JSON.stringify({ 
+        name, 
+        email, 
+        phone, 
+        job_title, 
+        birth_date, 
+        message 
+      }),
     });
 
     if (!response.ok) {
-      throw new Error("Erro ao atualizar produto");
+      throw new Error("Erro ao atualizar lead");
     }
 
     return await response.json();
   } catch (error) {
-    console.error("Error fetching leads:", error);
+    console.error("Error updating lead:", error);
     throw error;
   }
 }

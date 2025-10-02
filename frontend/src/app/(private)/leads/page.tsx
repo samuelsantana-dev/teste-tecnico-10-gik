@@ -17,7 +17,6 @@ export default function LeadPage() {
     async function getLead() {
       try {
         const responseApi = await getLeadApi();
-        console.log("🚀 ~ getLead ~ responseApi:", responseApi)
         setLead(responseApi);
       } catch (error) {
         console.error("Error fetching leads:", error);
@@ -29,18 +28,18 @@ export default function LeadPage() {
     getLead();
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (_id: string) => {
     try {
-      await deleteLeadApi(id);
-      setLead(leads.filter(lead => lead.id !== id));
+      await deleteLeadApi(_id);
+      setLead(leads.filter(lead => lead._id !== _id));
     } catch (error) {
       console.error("Error deleting lead:", error);
       alert("Erro ao excluir produto");
     } 
   };
 
-  const handleEdit = (id: string) => {
-    router.push(`/leads/edit/${id}`);
+  const handleEdit = (_id: string) => {
+    router.push(`/leads/edit/${_id}`);
   };
 
   const handleCreate = () => {
@@ -107,7 +106,10 @@ export default function LeadPage() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {leads?.map((lead: any) => (
-                    <tr key={lead.id} className="hover:bg-gray-50">
+                    <tr key={lead._id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900 max-w-xs truncate">{lead.name || "Sem descrição"}</div>
+                      </td>
                       <td className="px-6 py-4">
                         <div className="text-sm text-gray-900 max-w-xs truncate">{lead.email || "Sem descrição"}</div>
                       </td>
@@ -123,7 +125,7 @@ export default function LeadPage() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2">
                           <Button
-                            onClick={() => handleEdit(lead.id)}
+                            onClick={() => handleEdit(lead._id)}
                             color="secondary"
                             size="sm"
                             className="flex items-center bg-yellow-500 hover:bg-yellow-600"
@@ -134,7 +136,7 @@ export default function LeadPage() {
                             Editar
                           </Button>
                           <Button
-                            onClick={() => handleDelete(lead.id)}
+                            onClick={() => handleDelete(lead._id)}
                             color="danger"
                             size="sm"
                             className="flex items-center bg-red-600 hover:bg-red-700 text-white"

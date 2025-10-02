@@ -1,5 +1,5 @@
 export interface LeadData {
-  id?: string;
+  _id?: string;
   createdAt?: string;
   updatedAt?: string;
   name?: string;

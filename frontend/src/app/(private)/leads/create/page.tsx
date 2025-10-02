@@ -32,10 +32,8 @@ const [error, setError] = useState<Record<string, string>>({});
     birth_date: birthDate,
     message: message,
   };
-    console.log("🚀 ~ handleSubmit ~ formData:", formData)
 
   const parsed = schemaLeadCreateUpdate.safeParse(formData);
-  console.log("🚀 ~ handleSubmit ~ parsed:", parsed)
 
   if (!parsed.success) {
     const fieldErrors: Record<string, string> = {};
@@ -129,8 +127,7 @@ const [error, setError] = useState<Record<string, string>>({});
 
         <InputText 
           label="Data de nascimento"
-          placeholder="Digite sua data de nascimento (YYYY-MM-DD)"
-          type="text"
+          type="date"
           size="md"
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}

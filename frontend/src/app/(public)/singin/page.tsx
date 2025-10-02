@@ -47,7 +47,6 @@ export default function RegisterPage() {
       setLoading(true);
 
       const response = await registerUser(parsed.data);
-      console.log("🚀 ~ handleSubmit ~ response:", response)
 
       setUser({
         token: response.token,
