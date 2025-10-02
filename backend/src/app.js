@@ -4,9 +4,17 @@ import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import leadsRouter from "./routes/LeadRoutes.js";
 import authRouter from "./routes/Auth.js";
-
 dotenv.config();
 const app = express();
+app.use(cors({
+  origin: [
+    'https://teste-tecnico-10-gik.vercel.app',
+    'http://localhost:3000' 
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(cors());
 app.use(express.json());
