@@ -17,16 +17,18 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "json2csv": "^6.0.0-alpha.2",
-    "jsonwebtoken": "^9.0.2",
+    "jsonwebtoken": "^9.0.3",
     "mogoose": "^0.0.1-security",
     "mongodb": "^6.20.0",
     "mongoose": "^8.18.3",
+    "pino": "^10.1.0",
     "typescript": "^5.9.3",
     "zod": "^4.3.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "nodemon": "^3.1.11"
   }
 }
