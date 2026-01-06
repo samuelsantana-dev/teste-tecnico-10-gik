@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "API Node.js com MongoDB",
   "type": "module",
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -20,9 +20,13 @@
     "jsonwebtoken": "^9.0.2",
     "mogoose": "^0.0.1-security",
     "mongodb": "^6.20.0",
-    "mongoose": "^8.18.3"
+    "mongoose": "^8.18.3",
+    "typescript": "^5.9.3",
+    "zod": "^4.3.4"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.6",
+    "nodemon": "^3.1.11"
   }
 }
